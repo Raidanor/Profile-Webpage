@@ -38,8 +38,8 @@ function App()
     {
         const {data} = await supabase
             .from('countries')
-            .select('name')
-            .eq('Canada')
+            .select()
+            
         
         setCountries(data);
     }
