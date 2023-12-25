@@ -39,9 +39,20 @@ function App()
         const {data} = await supabase
             .from('countries')
             .select('*')
-            .eq('name', 'Canada')
+            
         
         setCountries(data);
+    }
+
+
+
+    const [addCountrys, setAddCountry] = useState([]);
+
+    useEffect(() => { addCountry();}, [] );
+
+    async function addCountry()
+    {
+        alert(addCountrys);
     }
     
 
@@ -58,6 +69,13 @@ function App()
                 <li key={country.name}>{country.name}</li>
                 ))}
             </ul>
+
+            <form className="login-form" onSubmit={(c) => addCountry(c)}>
+                <input name="country" type="text" placeholder="country" />
+                <button className="button" type="submit">Submit</button>
+            </form>
+
+
 
         </>
     )
