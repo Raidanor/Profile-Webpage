@@ -39,7 +39,7 @@ function App()
         const {data} = await supabase
             .from('countries')
             .select('*')
-            .rq('name', 'Canada')
+            .eq('name', 'Canada')
             
         
         setCountries(data);
@@ -71,10 +71,10 @@ function App()
                 ))}
             </ul>
 
-            <form className="login-form" onSubmit={(c) => addCountry(c)}>
+            {/* <form className="login-form" onSubmit={(c) => addCountry(c)}>
                 <input name="country" type="text" placeholder="country" />
                 <button className="button" type="submit">Submit</button>
-            </form>
+            </form> */}
 
 
 
