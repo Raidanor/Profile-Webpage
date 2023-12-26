@@ -39,6 +39,7 @@ function App()
         const {data} = await supabase
             .from('countries')
             .select('*')
+            .where('name', 'Canada')
             
         
         setCountries(data);
