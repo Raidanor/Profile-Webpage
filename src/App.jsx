@@ -39,7 +39,7 @@ function App()
         const {data} = await supabase
             .from('countries')
             .select('*')
-            .where('name', 'Canada')
+            .rq('name', 'Canada')
             
         
         setCountries(data);
