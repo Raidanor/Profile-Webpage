@@ -36,26 +36,19 @@ function App()
 
     async function getCountries()
     {
-        const {data} = await supabase
+        const {data, error} = await supabase
             .from('countries')
             .select('*')
-            .eq('name', 'Canada')
+            .or('lan.neq.English')
+            .or('continent.eq.Europe')
+            
             
         
         setCountries(data);
     }
 
 
-
-    const [addCountrys, setAddCountry] = useState([]);
-
-    useEffect(() => { addCountry();}, [] );
-
-    async function addCountry()
-    {
-        alert(addCountrys);
-    }
-    
+    const [fruit] = ["Apples", "Oranges", "Bananas"];
 
 
     return(
@@ -65,11 +58,16 @@ function App()
             </div>
             
 
-            <ul>
+            {/* <ol>
                 {countries.map((country) => (
-                <li key={country.name}>{country.name}</li>
+                <li key={country.id}>{country}</li>
                 ))}
-            </ul>
+            </ol> */}
+            
+            <div>
+                {fruit.map((f) => <li>{f}</li>)}
+            </div>
+            
 
             {/* <form className="login-form" onSubmit={(c) => addCountry(c)}>
                 <input name="country" type="text" placeholder="country" />
