@@ -74,14 +74,14 @@ function App()
 
             {fetchError && (<p>{fetchError}</p>)}
             {countries &&
-                <ul>
+                <>
                     {countries.map(country =>
-                        
-                        <li>
+
+                        <>
                             <CountryCard key={country.id} c={country}/>
-                        </li>
+                        </>
                     )}
-                </ul>
+                </>
             }
 
             {/* <form className="login-form" onSubmit={(c) => addCountry(c)}>
