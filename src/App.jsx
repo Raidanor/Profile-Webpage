@@ -5,6 +5,9 @@ import './App.css'
 
 import { createClient } from "@supabase/supabase-js";
 
+//Components
+import CountryCard from './components/country';
+
 const supabase = createClient("https://siaceazxpjivwwhasjnb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpYWNlYXp4cGppdnd3aGFzam5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMzNjEwMDMsImV4cCI6MjAxODkzNzAwM30.-b-nuanq4_M5pJ3DhFS0rfjhEVfriM2z71u-KmtdqB0");
 
 
@@ -31,6 +34,7 @@ function App()
     
 
     const [countries, setCountries] = useState([]);
+    const [fetchError, setFetchError] = useState(null);
 
     useEffect(() => { getCountries();}, [] );
 
@@ -40,11 +44,21 @@ function App()
             .from('countries')
             .select('*')
             .or('lan.neq.English')
-            .or('continent.eq.Europe')
+            .or('continent.neq.Europe')
             
-            
-        
-        setCountries(data);
+        if (error)
+        {
+            setFetchError("Could not fetch data");
+            setCountries(null);
+            console.log(error);
+        }
+
+        if (data)
+        {
+            setCountries(data);
+            setFetchError(null);
+        }
+
     }
 
 
@@ -58,16 +72,16 @@ function App()
             </div>
             
 
-            {/* <ol>
-                {countries.map((country) => (
-                <li key={country.id}>{country}</li>
-                ))}
-            </ol> */}
-            
-            <div>
-                {fruit.map((f) => <li>{f}</li>)}
-            </div>
-            
+            {fetchError && (<p>{fetchError}</p>)}
+            {countries &&
+                <ul>
+                    {countries.map(country =>
+                        <li>
+                            <CountryCard key={country.id} c={country}/>
+                        </li>
+                    )}
+                </ul>
+            }
 
             {/* <form className="login-form" onSubmit={(c) => addCountry(c)}>
                 <input name="country" type="text" placeholder="country" />
