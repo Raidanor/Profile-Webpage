@@ -76,6 +76,7 @@ function App()
             {countries &&
                 <ul>
                     {countries.map(country =>
+                        
                         <li>
                             <CountryCard key={country.id} c={country}/>
                         </li>
