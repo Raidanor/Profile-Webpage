@@ -6,7 +6,10 @@ import './App.css'
 import { createClient } from "@supabase/supabase-js";
 
 //Components
-import CountryCard from './components/country';
+import CountryCard from './components/CountryCard';
+
+//Pages imports
+import Create from "./pages/Create"
 
 const supabase = createClient("https://siaceazxpjivwwhasjnb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpYWNlYXp4cGppdnd3aGFzam5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMzNjEwMDMsImV4cCI6MjAxODkzNzAwM30.-b-nuanq4_M5pJ3DhFS0rfjhEVfriM2z71u-KmtdqB0");
 
@@ -84,11 +87,9 @@ function App()
                 </>
             }
 
-            {/* <form className="login-form" onSubmit={(c) => addCountry(c)}>
-                <input name="country" type="text" placeholder="country" />
-                <button className="button" type="submit">Submit</button>
-            </form> */}
+            <Create />
 
+            
 
 
         </>
