@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 
+
 const Create = () =>
 {
     const[id, setId] = useState();
@@ -21,6 +22,14 @@ const Create = () =>
             return
         }
 
+        console.log(name, lan, continent);
+
+        const {data, error} = await supabase
+            .from('countries')
+            .insert({ id: id, name: name, lan: lan, continent: continent})
+
+        console.log("Success!!!")
+
         
         
 
@@ -32,13 +41,15 @@ const Create = () =>
             <h2>Create</h2>
 
             <form onSubmit={handleSubmit}>
-                <label htmlFor="id">Id:</label>
+
+                {/* <label htmlFor="id">Id:</label>
                 <input
                     type="number"
                     id="id"
                     value={id}
                     onChange= {(e) => setId(e.target.value)}
-                />
+                /> */}
+
                 <label htmlFor="name">Name:</label>
                 <input
                     type="text"
