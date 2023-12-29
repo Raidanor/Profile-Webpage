@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 const Create = () =>
 {
+    const[id, setId] = useState();
     const[name, setName] = useState('');
     const[lan, setLan] = useState('');
     const[continent, setContinent] = useState('');
@@ -31,6 +32,13 @@ const Create = () =>
             <h2>Create</h2>
 
             <form onSubmit={handleSubmit}>
+                <label htmlFor="id">Id:</label>
+                <input
+                    type="number"
+                    id="id"
+                    value={id}
+                    onChange= {(e) => setId(e.target.value)}
+                />
                 <label htmlFor="name">Name:</label>
                 <input
                     type="text"
@@ -40,7 +48,7 @@ const Create = () =>
                 />
 
                 <label htmlFor="lan">Language</label>
-                <textarea
+                <input
                     id="lan"
                     value={lan}
                     onChange= {(e) => setLan(e.target.value)}
