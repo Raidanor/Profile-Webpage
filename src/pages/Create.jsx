@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 
 
-const Create = () =>
+function Create()
 {
     const[id, setId] = useState();
     const[name, setName] = useState('');
