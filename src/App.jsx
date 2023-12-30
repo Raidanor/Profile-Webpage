@@ -39,7 +39,7 @@ function App()
     const [countries, setCountries] = useState([]);
     const [fetchError, setFetchError] = useState(null);
 
-    useEffect(() => { getCountries();}, [] );
+    useEffect(() => { getCountries()}, [] );
 
     async function getCountries()
     {
@@ -77,6 +77,11 @@ function App()
             .delete()
             .eq('id', deleteID)
 
+        if (error)
+        {
+            console.log("Error while deleting row")
+        }
+
     }
 
     const [deleteCountry, setDeleteCountry] = useState('');
@@ -92,6 +97,10 @@ function App()
             .delete()
             .eq('name', deleteCountry)
 
+        if (error)
+        {
+            console.log("Error while deleting row")
+        }
     }
 
 
@@ -174,9 +183,6 @@ function Create()
             .insert({ id: id, name: name, lan: lan, continent: continent})
 
         console.log("Success!!!")
-
-        
-        
 
     }
 
