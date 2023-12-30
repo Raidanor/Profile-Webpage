@@ -108,8 +108,9 @@ function App()
 
 
     return(
-        <>
-            <div>
+        
+        <div>
+            <div className='justify-content-center'>
                 Window Width: {windowWidth}
             </div>
             
@@ -117,14 +118,30 @@ function App()
             {fetchError && (<p>{fetchError}</p>)}
             {countries &&
                 <>
-                    {countries.map(country =>
+                    <div class="container-fluid">
+                        <div class="row justify-content-center">
+                            {countries.map(country =>
+                                <div class="col-4">
+                                <CountryCard key={country.id} c={country}/>
+                                </div>
 
-                        <>
-                            <CountryCard key={country.id} c={country}/>
-                        </>
-                    )}
+                            )}
+                        </div>
+                    </div>
                 </>
             }
+
+            <div className="container-fluid">
+                <div className="row justify-content-center">
+                    <div className="col-6">
+                        <h1>This is a Col</h1>
+                    </div>
+                    <div className="col-6">
+                        <h1>This is a 2nd Col</h1>
+                    </div>
+
+                </div>
+            </div>
 
             <Create />
             <br />
@@ -136,7 +153,7 @@ function App()
                     id="deleterow"
                     onChange= {(e) => setDeleteID(e.target.value)}
                 />
-                <button>DELETE!</button>
+                <button>DELETE</button>
             </form>
 
             <form onSubmit={deleteName}>
@@ -146,13 +163,13 @@ function App()
                     id = "deletename"
                     onChange= {(e) => setDeleteCountry(e.target.value)}
                 />
-                <button>DELETE!</button>
+                <button>DELETE</button>
             </form>
 
             
 
 
-        </>
+        </div>
     )
 }
 
