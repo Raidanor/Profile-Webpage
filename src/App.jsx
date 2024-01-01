@@ -7,6 +7,8 @@ import { createClient } from "@supabase/supabase-js";
 
 //Components
 import CountryCard from './components/CountryCard';
+import Navbar from './components/Navbar';
+
 
 //Pages imports
 // import Create from "./pages/Create"
@@ -106,10 +108,12 @@ function App()
 
     const [fruit] = ["Apples", "Oranges", "Bananas"];
 
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     return(
         
         <div>
+            <Navbar />
             <div className='justify-content-center'>
                 Window Width: {windowWidth}
             </div>
@@ -133,10 +137,10 @@ function App()
 
             <div className="container-fluid">
                 <div className="row justify-content-center">
-                    <div className="col-6">
+                    <div className="col">
                         <h1>This is a Col</h1>
                     </div>
-                    <div className="col-6">
+                    <div className="col">
                         <h1>This is a 2nd Col</h1>
                     </div>
 
