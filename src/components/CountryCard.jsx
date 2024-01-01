@@ -1,10 +1,12 @@
 const CountryCard = ({ c }) =>
 {
     return(
-        <div>
-            <h3>{c.name}</h3>
-            <a>{c.lan}<br />
-            {c.continent}<br /></a>
+        <div className="justify-content-center ">
+            <center>
+                <h3>{c.name}</h3>
+                <a>{c.lan}<br />
+                {c.continent}<br /></a>
+            </center>
         </div>
     )
 }

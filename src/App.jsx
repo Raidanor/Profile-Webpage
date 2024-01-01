@@ -8,6 +8,7 @@ import { createClient } from "@supabase/supabase-js";
 //Components
 import CountryCard from './components/CountryCard';
 import Navbar from './components/Navbar';
+import Alpha from './components/Alpha.jsx';
 
 
 //Pages imports
@@ -48,7 +49,7 @@ function App()
         const {data, error} = await supabase
             .from('countries')
             .select('*')
-            .or('lan.neq.English')
+            .or('lan.eq.English')
             .or('continent.neq.Europe')
             
         if (error)
@@ -114,7 +115,7 @@ function App()
         
         <div>
             <Navbar />
-            <div className='justify-content-center'>
+            <div className='d-flex justify-content-center'>
                 Window Width: {windowWidth}
             </div>
             
@@ -123,9 +124,9 @@ function App()
             {countries &&
                 <>
                     <div class="container-fluid">
-                        <div class="row justify-content-center">
+                        <div class="row d-flex">
                             {countries.map(country =>
-                                <div class="col-4">
+                                <div class="col-6">
                                 <CountryCard key={country.id} c={country}/>
                                 </div>
 
@@ -138,7 +139,7 @@ function App()
             <div className="container-fluid">
                 <div className="row justify-content-center">
                     <div className="col">
-                        <h1>This is a Col</h1>
+                        <center><h1>This is a Col</h1></center>
                     </div>
                     <div className="col">
                         <h1>This is a 2nd Col</h1>
@@ -172,7 +173,7 @@ function App()
 
             
 
-
+            <Alpha />
         </div>
     )
 }
