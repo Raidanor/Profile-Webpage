@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 
-
 function Create()
 {
     const[id, setId] = useState();
@@ -16,7 +15,7 @@ function Create()
     {
         e.preventDefault();
 
-        if (!name || !lan || !continent)
+        if (!id || !name || !lan || !continent)
         {
             setFormError("Please fill in all the fields correctly")
             return
@@ -30,9 +29,6 @@ function Create()
 
         console.log("Success!!!")
 
-        
-        
-
     }
 
 
@@ -42,13 +38,13 @@ function Create()
 
             <form onSubmit={handleSubmit}>
 
-                {/* <label htmlFor="id">Id:</label>
+                <label htmlFor="id">Id:</label>
                 <input
                     type="number"
                     id="id"
                     value={id}
                     onChange= {(e) => setId(e.target.value)}
-                /> */}
+                />
 
                 <label htmlFor="name">Name:</label>
                 <input
@@ -81,5 +77,6 @@ function Create()
         </div>
     )
 }
+
 
 export default Create;

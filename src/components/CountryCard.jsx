@@ -1,7 +1,7 @@
 const CountryCard = ({ c }) =>
 {
     return(
-        <div className="container border my-3 py-1" style={{color:'lightblue'}}>
+        <div className="container border rounded my-3 py-1" style={{color:'lightblue'}}>
             <center>
             <div className="row">
                 <center><h2>{c.name}</h2></center>

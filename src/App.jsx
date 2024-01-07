@@ -54,8 +54,9 @@ function App()
             
         if (error)
         {
-            setFetchError("Could not fetch data");
             setCountries(null);
+            setFetchError("Could not fetch data");
+        
             console.log(error);
         }
 
@@ -106,8 +107,49 @@ function App()
         }
     }
 
+    
+    const [answer, setAnswer] = useState('');
+    const handleQuiz = async(e) =>
+    {
+        e.preventDefault();
 
-    const [fruit] = ["Apples", "Oranges", "Bananas"];
+        console.log(answer);
+
+        console.log(countries[0].name)
+
+        GetAnswer(answer);
+
+        setScore(score+1)
+    }
+    
+    async function GetAnswer(n)
+    {
+        const {valid, error} = await supabase
+            .from('countries')
+            .select('*')
+            .eq('name', n)
+
+
+        console.log("This is GetAnswer " + n)
+        if (valid)
+        {
+            console.log("Correct!")
+        }
+
+        if (error)
+        {
+            console.log("Not found!")
+        }
+    }
+
+    const [score, setScore] = useState(0);
+    const handleScore = async(e) =>
+    {
+        e.preventDefault();
+
+        console.log(score);
+
+    }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -136,21 +178,6 @@ function App()
                 </>
             }
 
-            <div className="container-fluid">
-                <div className="row justify-content-center">
-                    <div className="col">
-                        <center><h1>This is a Col</h1></center>
-                    </div>
-                    <div className="col">
-                        <h1>This is a 2nd Col</h1>
-                    </div>
-
-                </div>
-            </div>
-
-            <Create />
-            <br />
-
             <form onSubmit={deleteRow}>
                 <label htmlFor="deleterow">Row number for deletion</label>
                 <input
@@ -172,11 +199,14 @@ function App()
             </form>
 
             
-
+            <Create />
             <Alpha />
+            <QuizEurope answer={answer} setAnswer={setAnswer} handleQuiz={handleQuiz} score={score}/>
         </div>
     )
 }
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 function Create()
 {
@@ -254,4 +284,29 @@ function Create()
         </div>
     )
 }
-export default App
+
+function QuizEurope( props )
+{
+
+    return(
+        <>
+            <center><h1>Enter as many countries as you can that are in Europe</h1></center>
+
+
+            <form onSubmit={props.handleQuiz}>
+                <label htmlFor="quiz">Enter Name</label>
+                <input
+                    id="quiz"
+                    type = "text"
+                    onChange= {(e) => props.setAnswer(e.target.value)}
+                />
+                <button>GO!</button>
+            </form>
+
+            <h3>Score = {props.score}</h3>
+        </>
+    )    
+}
+
+
+export default App;
