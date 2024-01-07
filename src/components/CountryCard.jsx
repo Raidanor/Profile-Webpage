@@ -1,11 +1,21 @@
 const CountryCard = ({ c }) =>
 {
     return(
-        <div className="justify-content-center ">
+        <div className="container border my-3 py-1" style={{color:'lightblue'}}>
             <center>
-                <h3>{c.name}</h3>
-                <a>{c.lan}<br />
-                {c.continent}<br /></a>
+            <div className="row">
+                <center><h2>{c.name}</h2></center>
+            </div>
+
+            <div className="row my-3" style={{color:'red'}}>
+                <div className="col">
+                    {c.lan}
+                </div>
+                <div className="col">
+                    {c.continent}
+                </div>
+            </div>
+
             </center>
         </div>
     )

@@ -126,7 +126,7 @@ function App()
                     <div class="container-fluid">
                         <div class="row d-flex">
                             {countries.map(country =>
-                                <div class="col-6">
+                                <div class="col-4">
                                 <CountryCard key={country.id} c={country}/>
                                 </div>
 
