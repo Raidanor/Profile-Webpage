@@ -121,16 +121,19 @@ function App()
 
         setScore(score+1)
     }
-    
+
     async function GetAnswer(n)
     {
+        var condition = 'name.eq.' + n;
         const {valid, error} = await supabase
             .from('countries')
             .select('*')
-            .eq('name', n)
+            .or('name.eq.' + n)
 
 
         console.log("This is GetAnswer " + n)
+        console.log("condition: " + condition)
+        
         if (valid)
         {
             console.log("Correct!")
