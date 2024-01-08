@@ -49,7 +49,7 @@ function App()
         const {data, error} = await supabase
             .from('countries')
             .select('*')
-            .eq('name', 'France')
+            .eq('continent', 'Europe')
             
         if (error)
         {
@@ -69,40 +69,7 @@ function App()
 
     
     
-    const [answer, setAnswer] = useState('');
-    const handleQuiz = async(e) =>
-    {
-        e.preventDefault();
-
-
-        GetAnswer(answer);
-
-        setScore(score+1)
-    }
-
-    async function GetAnswer(n)
-    {
-        
-        const {data, error} = await supabase
-            .from('countries')
-            .select('*')
-            .or('name.eq.' + n)
-
-        
-        
-        if (data)
-        {
-            console.log("Correct!")
-            setCountries(data);
-        }
-
-        if (error)
-        {
-            console.log("Not found!")
-        }
-    }
-
-    const [score, setScore] = useState(0);
+   
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -135,7 +102,7 @@ function App()
             
             {/* <Create /> */}
             
-            <QuizEurope answer={answer} setAnswer={setAnswer} handleQuiz={handleQuiz} score={score}/>
+            <QuizEurope />
         </div>
     )
 }
@@ -221,23 +188,65 @@ function Create()
 
 function QuizEurope( props )
 {
+    const [list, setList] = useState([]);
+
+    useEffect(() => { InitialiseList()}, [] );
+
+    async function InitialiseList()
+    {
+        const {data, error} = await supabase
+            .from('countries')
+            .select()
+            .or('continent.eq.Europe');
+
+        setList(data);
+    }
+
+    const [answer, setAnswer] = useState('');
+    const handleQuiz = async(e) =>
+    {
+        e.preventDefault();
+
+
+        GetAnswer(answer);
+
+        
+    }
+
+    async function GetAnswer(n)
+    {
+        for (var i=0; i<list.length; ++i)
+        {
+            if (list[i].name == n)
+            {
+                console.log("Country found!");
+            }
+            else{
+                console.log("Country NOT found!");
+
+            }
+        }
+        
+    }
+
+    const [score, setScore] = useState(0);
 
     return(
         <>
             <center><h1>Enter as many countries as you can that are in Europe</h1></center>
 
 
-            <form onSubmit={props.handleQuiz}>
+            <form onSubmit={handleQuiz}>
                 <label htmlFor="quiz">Enter Name</label>
                 <input
                     id="quiz"
                     type = "text"
-                    onChange= {(e) => props.setAnswer(e.target.value)}
+                    onChange= {(e) => setAnswer(e.target.value)}
                 />
                 <button>GO!</button>
             </form>
 
-            <h3>Score = {props.score}</h3>
+            <h3>Score = {score}</h3>
         </>
     )    
 }
