@@ -102,7 +102,7 @@ function App()
             
             {/* <Create /> */}
             
-            <QuizEurope />
+            <QuizEurope setCountries={setCountries}/>
         </div>
     )
 }
@@ -189,7 +189,7 @@ function Create()
 function QuizEurope( props )
 {
     const [list, setList] = useState([]);
-    var found = [];
+    const [found, setFound] = useState([]);
     
 
     useEffect(() => { InitialiseList()}, [] );
@@ -221,12 +221,12 @@ function QuizEurope( props )
         var index = -1;
 
 
-        //checking through found array befor looking it up in the listt array
-        for (var i=0; i < found.length; ++i)
+        //checking through found array before looking it up in the listt array
+        for (var i = 0; i < found.length; ++i)
         {
-            if (found[i] == n)
+            if (found[i].name == n)
             {
-                console.log(found[i] + " has already been found");
+                console.log(found[i].name + " has already been found");
                 return;
             }
         }
@@ -234,12 +234,14 @@ function QuizEurope( props )
 
         //going through list to find a matching country name
         //flag is flipped if found
-        for (var i=0; i<list.length; ++i)
+        for (var i = 0; i < list.length; ++i)
         {
             if (list[i].name == n)
             {
                 flag = true;
                 index = i;
+
+                setScore(score + 1);
             }
         }
 
@@ -249,10 +251,12 @@ function QuizEurope( props )
         {
             console.log("Correct");
 
-            found.push(list[index].name);
+            setFound( previous =>[...previous, list[index]])
 
             if (index > -1)
-                list.splice(index, 1);
+            {
+                setList(list.filter(item => item.name !== n));
+            }   
 
             
             
@@ -281,6 +285,24 @@ function QuizEurope( props )
             </form>
 
             <h3>Score = {score}</h3>
+
+            {/* displaying the list of found countries */}
+            {found &&
+                <>
+                    <div class="container-fluid">
+                        <div class="row d-flex">
+                            {found.map(f =>
+                                <div class="col-4">
+                                <CountryCard key={f.id} c={f}/>
+                                </div>
+
+                            )}
+                        </div>
+                    </div>
+                </>
+            }
+
+
         </>
     )    
 }
