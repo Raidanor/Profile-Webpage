@@ -49,8 +49,7 @@ function App()
         const {data, error} = await supabase
             .from('countries')
             .select('*')
-            .or('lan.eq.English')
-            .or('continent.neq.Europe')
+            .eq('name', 'France')
             
         if (error)
         {
@@ -68,54 +67,13 @@ function App()
 
     }
 
-    const [deleteID, setDeleteID] = useState();
     
-    const deleteRow = async (e) =>
-    {
-        e.preventDefault();
-
-        console.log("Deleting row " + deleteID);
-
-        const { error } = await supabase
-            .from('countries')
-            .delete()
-            .eq('id', deleteID)
-
-        if (error)
-        {
-            console.log("Error while deleting row")
-        }
-
-    }
-
-    const [deleteCountry, setDeleteCountry] = useState('');
-    
-    const deleteName = async (e) =>
-    {
-        e.preventDefault();
-
-        console.log("Deleting country where name = " + deleteCountry);
-
-        const { error } = await supabase
-            .from('countries')
-            .delete()
-            .eq('name', deleteCountry)
-
-        if (error)
-        {
-            console.log("Error while deleting row")
-        }
-    }
-
     
     const [answer, setAnswer] = useState('');
     const handleQuiz = async(e) =>
     {
         e.preventDefault();
 
-        console.log(answer);
-
-        console.log(countries[0].name)
 
         GetAnswer(answer);
 
@@ -124,19 +82,18 @@ function App()
 
     async function GetAnswer(n)
     {
-        var condition = 'name.eq.' + n;
-        const {valid, error} = await supabase
+        
+        const {data, error} = await supabase
             .from('countries')
             .select('*')
             .or('name.eq.' + n)
 
-
-        console.log("This is GetAnswer " + n)
-        console.log("condition: " + condition)
         
-        if (valid)
+        
+        if (data)
         {
             console.log("Correct!")
+            setCountries(data);
         }
 
         if (error)
@@ -146,13 +103,6 @@ function App()
     }
 
     const [score, setScore] = useState(0);
-    const handleScore = async(e) =>
-    {
-        e.preventDefault();
-
-        console.log(score);
-
-    }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -181,29 +131,10 @@ function App()
                 </>
             }
 
-            <form onSubmit={deleteRow}>
-                <label htmlFor="deleterow">Row number for deletion</label>
-                <input
-                    type = "number"
-                    id="deleterow"
-                    onChange= {(e) => setDeleteID(e.target.value)}
-                />
-                <button>DELETE</button>
-            </form>
-
-            <form onSubmit={deleteName}>
-                <label htmlFor="deletename">Name for deletion</label>
-                <input
-                    type = "text"
-                    id = "deletename"
-                    onChange= {(e) => setDeleteCountry(e.target.value)}
-                />
-                <button>DELETE</button>
-            </form>
 
             
-            <Create />
-            <Alpha />
+            {/* <Create /> */}
+            
             <QuizEurope answer={answer} setAnswer={setAnswer} handleQuiz={handleQuiz} score={score}/>
         </div>
     )
