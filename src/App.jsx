@@ -189,7 +189,7 @@ function Create()
 function QuizEurope( props )
 {
     const [list, setList] = useState([]);
-    const found = [];
+    var found = [];
     
 
     useEffect(() => { InitialiseList()}, [] );
@@ -224,12 +224,11 @@ function QuizEurope( props )
         //checking through found array befor looking it up in the listt array
         for (var i=0; i < found.length; ++i)
         {
-            console.log(found[i])
-            // if (found[i].name == n)
-            // {
-            //     console.log("Country already found");
-            //     break;
-            // }
+            if (found[i] == n)
+            {
+                console.log(found[i] + " has already been found");
+                return;
+            }
         }
 
 
@@ -239,7 +238,7 @@ function QuizEurope( props )
         {
             if (list[i].name == n)
             {
-                flag=true;
+                flag = true;
                 index = i;
             }
         }
@@ -250,7 +249,7 @@ function QuizEurope( props )
         {
             console.log("Correct");
 
-            found.push(list[i].name);
+            found.push(list[index].name);
 
             if (index > -1)
                 list.splice(index, 1);
