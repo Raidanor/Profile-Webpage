@@ -189,6 +189,8 @@ function Create()
 function QuizEurope( props )
 {
     const [list, setList] = useState([]);
+    const found = [];
+    
 
     useEffect(() => { InitialiseList()}, [] );
 
@@ -215,17 +217,50 @@ function QuizEurope( props )
 
     async function GetAnswer(n)
     {
+        var flag = false;
+        var index = -1;
+
+
+        //checking through found array befor looking it up in the listt array
+        for (var i=0; i < found.length; ++i)
+        {
+            console.log(found[i])
+            // if (found[i].name == n)
+            // {
+            //     console.log("Country already found");
+            //     break;
+            // }
+        }
+
+
+        //going through list to find a matching country name
+        //flag is flipped if found
         for (var i=0; i<list.length; ++i)
         {
             if (list[i].name == n)
             {
-                console.log("Country found!");
-            }
-            else{
-                console.log("Country NOT found!");
-
+                flag=true;
+                index = i;
             }
         }
+
+
+        //if found, item is added to a array "found" and then removed
+        if (flag)
+        {
+            console.log("Correct");
+
+            found.push(list[i].name);
+
+            if (index > -1)
+                list.splice(index, 1);
+
+            
+            
+        }
+        else
+            {   console.log("Incorrect! Try again!");   }
+
         
     }
 
