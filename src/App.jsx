@@ -212,6 +212,7 @@ function QuizEurope( props )
 
         GetAnswer(answer);
 
+        event.target.reset();
         
     }
 
