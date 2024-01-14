@@ -275,7 +275,7 @@ function QuizEurope( props )
                     <h1>Enter as many countries as you can that are in Europe</h1>
                 </div>
 
-                <div className="row justify-content-center">
+                <div className="row justify-content-center quiz-title">
                     <div className="col-6">
                         <center>
                             <form onSubmit={handleQuiz}>
@@ -392,7 +392,7 @@ function QuizEnglish( props )
                     <h1>Enter as many countries as you can that have English as the official language</h1>
                 </div>
 
-                <div className="row justify-content-center">
+                <div className="row justify-content-center quiz-title">
                     <div className="col-6">
                         <center>
                             <form onSubmit={handleQuiz}>
