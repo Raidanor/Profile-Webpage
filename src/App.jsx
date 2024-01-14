@@ -80,20 +80,35 @@ function App()
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     return(
-        
         <BrowserRouter>
             <Navbar />
             <div className='d-flex justify-content-center'>
                 Window Width: {windowWidth}
             </div>
-            
 
-            {fetchError && (<p>{fetchError}</p>)}
-            {countries &&
+            <Routes>
+                <Route exact path="/" element={<Home fetchError={fetchError} countries={countries}/>}/>
+                <Route exact path="/Europe" element = {<QuizEurope />} />
+                <Route exact path="/English" element = {<QuizEnglish />} />
+                
+            </Routes>
+
+        </BrowserRouter>
+    )
+}
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Components
+function Home(props)
+{
+    return(
+        <>
+            {props.fetchError && (<p>{props.fetchError}</p>)}
+            {props.countries &&
                 <>
                     <div class="container-fluid">
                         <div class="row d-flex">
-                            {countries.map(country =>
+                            {props.countries.map(country =>
                                 <div class="col-4">
                                 <CountryCard key={country.id} c={country}/>
                                 </div>
@@ -103,24 +118,9 @@ function App()
                     </div>
                 </>
             }
-
-
-            <Routes>
-                {/* <Route exact path="/" /> */}
-                <Route exact path="/Europe" element = {<QuizEurope />} />
-                <Route exact path="/English" element = {<QuizEnglish />} />
-                
-            </Routes>
-
-            
-            
-            
-            
-        </BrowserRouter>
+        </>
     )
 }
-
-// ---------------------------------------------------------------------------------------------------------------------------------------
 
 function Create()
 {
@@ -141,7 +141,6 @@ function Create()
             setFormError("Please fill in all the fields correctly")
             return
         }
-
         console.log(name, lan, continent);
 
         const {data, error} = await supabase
@@ -151,7 +150,6 @@ function Create()
         console.log("Success!!!")
 
     }
-
 
     return(
         <div class="page create">
@@ -266,26 +264,33 @@ function QuizEurope( props )
             }   
         }
         else {   console.log("Incorrect! Try again!");   }
-
     }
 
     const [score, setScore] = useState(0);
 
     return(
         <>
-            <center><h1>Enter as many countries as you can that are in Europe</h1></center>
+            <div className="container">
+                <div className="center">
+                    <h1>Enter as many countries as you can that are in Europe</h1>
+                </div>
 
-            <form onSubmit={handleQuiz}>
-                <label htmlFor="quiz">Enter Name</label>
-                <input
-                    id="quiz"
-                    type = "text"
-                    onChange= {(e) => setAnswer(e.target.value)}
-                />
-                <button>GO!</button>
-            </form>
-
-            <h3>Score = {score}</h3>
+                <div className="row justify-content-center">
+                    <div className="col-6">
+                        <center>
+                            <form onSubmit={handleQuiz}>
+                                <label htmlFor="quiz">Enter Name &nbsp;</label>
+                                <input
+                                    id="quiz"
+                                    type = "text"
+                                    onChange= {(e) => setAnswer(e.target.value)}
+                                />
+                                <button>GO!</button>
+                            </form>
+                        </center>
+                    </div>
+                </div>
+            </div>
 
             {/* displaying the list of found countries */}
             {found &&
@@ -302,6 +307,9 @@ function QuizEurope( props )
                     </div>
                 </>
             }
+            <div className='align-bottom'>
+                <h3>Score = {score}</h3>
+            </div>
         </>
     )    
 }
@@ -319,7 +327,7 @@ function QuizEnglish( props )
         const {data, error} = await supabase
             .from('countries')
             .select()
-            .or('lan.eq.English');
+            .or('continent.eq.Europe');
         setList(data);
     }
 
@@ -373,26 +381,33 @@ function QuizEnglish( props )
             }   
         }
         else {   console.log("Incorrect! Try again!");   }
-
     }
 
     const [score, setScore] = useState(0);
 
     return(
         <>
-            <center><h1>Enter as many countries as you can that have English as their official language</h1></center>
+            <div className="container">
+                <div className="center">
+                    <h1>Enter as many countries as you can that have English as the official language</h1>
+                </div>
 
-            <form onSubmit={handleQuiz}>
-                <label htmlFor="quiz">Enter Name</label>
-                <input
-                    id="quiz"
-                    type = "text"
-                    onChange= {(e) => setAnswer(e.target.value)}
-                />
-                <button>GO!</button>
-            </form>
-
-            <h3>Score = {score}</h3>
+                <div className="row justify-content-center">
+                    <div className="col-6">
+                        <center>
+                            <form onSubmit={handleQuiz}>
+                                <label htmlFor="quiz">Enter Name &nbsp;</label>
+                                <input
+                                    id="quiz"
+                                    type = "text"
+                                    onChange= {(e) => setAnswer(e.target.value)}
+                                />
+                                <button>GO!</button>
+                            </form>
+                        </center>
+                    </div>
+                </div>
+            </div>
 
             {/* displaying the list of found countries */}
             {found &&
@@ -409,6 +424,9 @@ function QuizEnglish( props )
                     </div>
                 </>
             }
+            <div className='align-bottom'>
+                <h3>Score = {score}</h3>
+            </div>
         </>
     )    
 }
