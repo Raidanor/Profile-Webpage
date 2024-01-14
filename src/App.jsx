@@ -299,7 +299,7 @@ function QuizEurope( props )
                         <div class="row d-flex">
                             {found.map(f =>
                                 <div class="col-4">
-                                <CountryCard key={f.name} c={f}/>
+                                <CountryCard key={f.id} c={f}/>
                                 </div>
 
                             )}
@@ -416,7 +416,7 @@ function QuizEnglish( props )
                         <div class="row d-flex">
                             {found.map(f =>
                                 <div class="col-4">
-                                <CountryCard key={f.name} c={f}/>
+                                <CountryCard key={f.id} c={f}/>
                                 </div>
 
                             )}
