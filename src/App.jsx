@@ -8,7 +8,7 @@ import { createClient } from "@supabase/supabase-js";
 //Components
 import CountryCard from './components/CountryCard';
 import Navbar from './components/Navbar';
-import Alpha from './components/Alpha.jsx';
+
 
 // React Router import
 import { BrowserRouter, Route, Routes } from "react-router-dom"
