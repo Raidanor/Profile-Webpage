@@ -10,6 +10,9 @@ import CountryCard from './components/CountryCard';
 import Navbar from './components/Navbar';
 import Alpha from './components/Alpha.jsx';
 
+// React Router import
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+
 
 //Pages imports
 // import Create from "./pages/Create"
@@ -67,7 +70,10 @@ function App()
 
     }
 
-    
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Creating routing
+
+
     
    
 
@@ -75,7 +81,7 @@ function App()
 
     return(
         
-        <div>
+        <>
             <Navbar />
             <div className='d-flex justify-content-center'>
                 Window Width: {windowWidth}
@@ -98,12 +104,26 @@ function App()
                 </>
             }
 
+            <BrowserRouter>
+                <Routes>
+                    {/* <Route exact path="/" /> */}
+                    <Route exact path="/Europe" element = {<QuizEurope />} />
+                    <Route exact path="/English" element = {<QuizEnglish />} />
+                    
+                </Routes>
+                <div className="container-fluid border">
+                    <div className="row justify-content-center py-2">
+                        <div className="col-4"><center><Link to="Europe">Europe Quiz</Link></center></div>
+                        <div className="col-4"><center><Link to="English">English Quiz</Link></center></div>
 
+                    </div>
+                </div>
+            </BrowserRouter>
             
-            {/* <Create /> */}
             
-            <QuizEurope setCountries={setCountries}/>
-        </div>
+            
+            
+        </>
     )
 }
 
@@ -200,7 +220,6 @@ function QuizEurope( props )
             .from('countries')
             .select()
             .or('continent.eq.Europe');
-
         setList(data);
     }
 
@@ -209,18 +228,15 @@ function QuizEurope( props )
     {
         e.preventDefault();
 
-
         GetAnswer(answer);
 
         event.target.reset();
-        
     }
 
     async function GetAnswer(n)
     {
         var flag = false;
         var index = -1;
-
 
         //checking through found array before looking it up in the listt array
         for (var i = 0; i < found.length; ++i)
@@ -231,7 +247,6 @@ function QuizEurope( props )
                 return;
             }
         }
-
 
         //going through list to find a matching country name
         //flag is flipped if found
@@ -246,26 +261,19 @@ function QuizEurope( props )
             }
         }
 
-
         //if found, item is added to a array "found" and then removed
         if (flag)
         {
             console.log("Correct");
-
             setFound( previous =>[...previous, list[index]])
 
             if (index > -1)
             {
                 setList(list.filter(item => item.name !== n));
             }   
-
-            
-            
         }
-        else
-            {   console.log("Incorrect! Try again!");   }
+        else {   console.log("Incorrect! Try again!");   }
 
-        
     }
 
     const [score, setScore] = useState(0);
@@ -273,7 +281,6 @@ function QuizEurope( props )
     return(
         <>
             <center><h1>Enter as many countries as you can that are in Europe</h1></center>
-
 
             <form onSubmit={handleQuiz}>
                 <label htmlFor="quiz">Enter Name</label>
@@ -302,11 +309,115 @@ function QuizEurope( props )
                     </div>
                 </>
             }
-
-
         </>
     )    
 }
 
+function QuizEnglish( props )
+{
+    const [list, setList] = useState([]);
+    const [found, setFound] = useState([]);
+    
+
+    useEffect(() => { InitialiseList()}, [] );
+
+    async function InitialiseList()
+    {
+        const {data, error} = await supabase
+            .from('countries')
+            .select()
+            .or('lan.eq.English');
+        setList(data);
+    }
+
+    const [answer, setAnswer] = useState('');
+    const handleQuiz = async(e) =>
+    {
+        e.preventDefault();
+
+        GetAnswer(answer);
+
+        event.target.reset();
+    }
+
+    async function GetAnswer(n)
+    {
+        var flag = false;
+        var index = -1;
+
+        //checking through found array before looking it up in the listt array
+        for (var i = 0; i < found.length; ++i)
+        {
+            if (found[i].name == n)
+            {
+                console.log(found[i].name + " has already been found");
+                return;
+            }
+        }
+
+        //going through list to find a matching country name
+        //flag is flipped if found
+        for (var i = 0; i < list.length; ++i)
+        {
+            if (list[i].name == n)
+            {
+                flag = true;
+                index = i;
+
+                setScore(score + 1);
+            }
+        }
+
+        //if found, item is added to a array "found" and then removed
+        if (flag)
+        {
+            console.log("Correct");
+            setFound( previous =>[...previous, list[index]])
+
+            if (index > -1)
+            {
+                setList(list.filter(item => item.name !== n));
+            }   
+        }
+        else {   console.log("Incorrect! Try again!");   }
+
+    }
+
+    const [score, setScore] = useState(0);
+
+    return(
+        <>
+            <center><h1>Enter as many countries as you can that have English as their official language</h1></center>
+
+            <form onSubmit={handleQuiz}>
+                <label htmlFor="quiz">Enter Name</label>
+                <input
+                    id="quiz"
+                    type = "text"
+                    onChange= {(e) => setAnswer(e.target.value)}
+                />
+                <button>GO!</button>
+            </form>
+
+            <h3>Score = {score}</h3>
+
+            {/* displaying the list of found countries */}
+            {found &&
+                <>
+                    <div class="container-fluid">
+                        <div class="row d-flex">
+                            {found.map(f =>
+                                <div class="col-4">
+                                <CountryCard key={f.id} c={f}/>
+                                </div>
+
+                            )}
+                        </div>
+                    </div>
+                </>
+            }
+        </>
+    )    
+}
 
 export default App;
