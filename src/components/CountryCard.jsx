@@ -7,9 +7,9 @@ const CountryCard = ({ c }) =>
                 <div className="col">
                     <h2>{c.name}</h2>
                 </div>
-                <div className="col">
+                {/* <div className="col">
                     {c.flag}
-                </div>
+                </div> */}
             </div>
             <center>
             <div className="row my-3" style={{color:'red'}}>

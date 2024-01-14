@@ -299,7 +299,7 @@ function QuizEurope( props )
                         <div class="row d-flex">
                             {found.map(f =>
                                 <div class="col-4">
-                                <CountryCard key={f.id} c={f}/>
+                                <CountryCard key={f.name} c={f}/>
                                 </div>
 
                             )}
@@ -327,7 +327,7 @@ function QuizEnglish( props )
         const {data, error} = await supabase
             .from('countries')
             .select()
-            .or('continent.eq.Europe');
+            .or('lan.eq.English');
         setList(data);
     }
 
@@ -416,7 +416,7 @@ function QuizEnglish( props )
                         <div class="row d-flex">
                             {found.map(f =>
                                 <div class="col-4">
-                                <CountryCard key={f.id} c={f}/>
+                                <CountryCard key={f.name} c={f}/>
                                 </div>
 
                             )}
