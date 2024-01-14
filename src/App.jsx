@@ -90,9 +90,7 @@ function App()
                 <Route exact path="/" element={<Home fetchError={fetchError} countries={countries}/>}/>
                 <Route exact path="/Europe" element = {<QuizEurope />} />
                 <Route exact path="/English" element = {<QuizEnglish />} />
-                
             </Routes>
-
         </BrowserRouter>
     )
 }
@@ -112,7 +110,6 @@ function Home(props)
                                 <div class="col-4">
                                 <CountryCard key={country.id} c={country}/>
                                 </div>
-
                             )}
                         </div>
                     </div>
@@ -301,7 +298,6 @@ function QuizEurope( props )
                                 <div class="col-4">
                                 <CountryCard key={f.id} c={f}/>
                                 </div>
-
                             )}
                         </div>
                     </div>
@@ -418,7 +414,6 @@ function QuizEnglish( props )
                                 <div class="col-4">
                                 <CountryCard key={f.id} c={f}/>
                                 </div>
-
                             )}
                         </div>
                     </div>
