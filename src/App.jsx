@@ -81,7 +81,7 @@ function App()
 
     return(
         
-        <>
+        <BrowserRouter>
             <Navbar />
             <div className='d-flex justify-content-center'>
                 Window Width: {windowWidth}
@@ -104,26 +104,19 @@ function App()
                 </>
             }
 
-            <BrowserRouter>
-                <Routes>
-                    {/* <Route exact path="/" /> */}
-                    <Route exact path="/Europe" element = {<QuizEurope />} />
-                    <Route exact path="/English" element = {<QuizEnglish />} />
-                    
-                </Routes>
-                <div className="container-fluid border">
-                    <div className="row justify-content-center py-2">
-                        <div className="col-4"><center><Link to="Europe">Europe Quiz</Link></center></div>
-                        <div className="col-4"><center><Link to="English">English Quiz</Link></center></div>
 
-                    </div>
-                </div>
-            </BrowserRouter>
+            <Routes>
+                {/* <Route exact path="/" /> */}
+                <Route exact path="/Europe" element = {<QuizEurope />} />
+                <Route exact path="/English" element = {<QuizEnglish />} />
+                
+            </Routes>
+
             
             
             
             
-        </>
+        </BrowserRouter>
     )
 }
 
