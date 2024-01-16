@@ -90,6 +90,8 @@ function App()
                 <Route exact path="/" element={<Home fetchError={fetchError} countries={countries}/>}/>
                 <Route exact path="/Europe" element = {<QuizEurope />} />
                 <Route exact path="/English" element = {<QuizEnglish />} />
+                <Route exact path="/CustomQuiz" element = {<CustomQuiz />} />
+                
             </Routes>
         </BrowserRouter>
     )
@@ -426,4 +428,54 @@ function QuizEnglish( props )
     )    
 }
 
+function CustomQuiz(props)
+{
+    const [userInput, setUserInput] = useState(null);
+    
+    const [formError, setFormError] = useState(null);
+    
+    const [param1, setParam1] = useState('');
+    const [param2, setParam2] = useState('');
+    
+
+    const handleSubmit = async (e) => 
+    {
+        e.preventDefault();
+
+        console.log("button clikced")
+    }
+    return(
+        <>
+            <div className='center'>
+                <p>Want to make your own Quiz?</p>
+                <p>Enter your own parameter and create it!</p>
+            </div>
+
+            <div>
+            <form onSubmit={handleSubmit}>
+
+                <label htmlFor="p1">Parameter 1: &nbsp;</label>
+                <input
+                    type="number"
+                    id="p1"
+                    value={param1}
+                    onChange= {(e) => setId(e.target.value)}
+                />
+
+                <label htmlFor="p2">Parameter 1: &nbsp;</label>
+                <input
+                    type="text"
+                    id="p2"
+                    value={param2}
+                    onChange= {(e) => setName(e.target.value)}
+                />
+
+                <button>Create Quiz</button>
+
+                </form>
+            </div>
+
+        </>
+    )
+}
 export default App;
