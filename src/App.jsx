@@ -436,6 +436,8 @@ function CustomQuiz(props)
     
     const [param1, setParam1] = useState('');
     const [param2, setParam2] = useState('');
+
+    const [flag, setFlag] = useState(false);
     
 
     const handleSubmit = async (e) => 
@@ -443,6 +445,11 @@ function CustomQuiz(props)
         e.preventDefault();
 
         console.log("button clikced")
+
+        const [data, error] = await supabase
+            .from('contries')
+            .select()
+            .eq(param1 + '' + param2)
     }
     return(
         <>
@@ -459,15 +466,15 @@ function CustomQuiz(props)
                     type="number"
                     id="p1"
                     value={param1}
-                    onChange= {(e) => setId(e.target.value)}
+                    onChange= {(e) => setParam1(e.target.value)}
                 />
 
-                <label htmlFor="p2">Parameter 1: &nbsp;</label>
+                <label htmlFor="p2">Parameter 2: &nbsp;</label>
                 <input
                     type="text"
                     id="p2"
                     value={param2}
-                    onChange= {(e) => setName(e.target.value)}
+                    onChange= {(e) => setParam2(e.target.value)}
                 />
 
                 <button>Create Quiz</button>
