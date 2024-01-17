@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { motion } from "framer-motion"
 import './App.css'
 
 import { createClient } from "@supabase/supabase-js";
@@ -87,6 +86,7 @@ function App()
             </div>
 
             <Routes>
+                <Route exact path="" element={<Home fetchError={fetchError} countries={countries}/>}/>
                 <Route exact path="/" element={<Home fetchError={fetchError} countries={countries}/>}/>
                 <Route exact path="/Europe" element = {<QuizEurope />} />
                 <Route exact path="/English" element = {<QuizEnglish />} />
@@ -94,12 +94,23 @@ function App()
                 
                 
             </Routes>
+            <MyComponent />
         </BrowserRouter>
     )
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // Components
+export const MyComponent = () => (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    />
+  )
+
+
+
 function Home(props)
 {
     return(
