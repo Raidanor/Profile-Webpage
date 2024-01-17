@@ -90,7 +90,8 @@ function App()
                 <Route exact path="/" element={<Home fetchError={fetchError} countries={countries}/>}/>
                 <Route exact path="/Europe" element = {<QuizEurope />} />
                 <Route exact path="/English" element = {<QuizEnglish />} />
-                <Route exact path="/CustomQuiz" element = {<CustomQuiz />} />
+                <Route exact path="/CustomQuiz" element = {<Custom />} />
+                
                 
             </Routes>
         </BrowserRouter>
@@ -196,293 +197,147 @@ function Create()
     )
 }
 
-function QuizEurope( props )
+function QuizEurope()
 {
-    const [list, setList] = useState([]);
-    const [found, setFound] = useState([]);
-    
-
-    useEffect(() => { InitialiseList()}, [] );
-
-    async function InitialiseList()
-    {
-        const {data, error} = await supabase
-            .from('countries')
-            .select()
-            .or('continent.eq.Europe');
-        setList(data);
-    }
-
-    const [answer, setAnswer] = useState('');
-    const handleQuiz = async(e) =>
-    {
-        e.preventDefault();
-
-        GetAnswer(answer);
-
-        event.target.reset();
-    }
-
-    async function GetAnswer(n)
-    {
-        var flag = false;
-        var index = -1;
-
-        //checking through found array before looking it up in the listt array
-        for (var i = 0; i < found.length; ++i)
-        {
-            if (found[i].name == n)
-            {
-                console.log(found[i].name + " has already been found");
-                return;
-            }
-        }
-
-        //going through list to find a matching country name
-        //flag is flipped if found
-        for (var i = 0; i < list.length; ++i)
-        {
-            if (list[i].name == n)
-            {
-                flag = true;
-                index = i;
-
-                setScore(score + 1);
-            }
-        }
-
-        //if found, item is added to a array "found" and then removed
-        if (flag)
-        {
-            console.log("Correct");
-            setFound( previous =>[...previous, list[index]])
-
-            if (index > -1)
-            {
-                setList(list.filter(item => item.name !== n));
-            }   
-        }
-        else {   console.log("Incorrect! Try again!");   }
-    }
-
-    const [score, setScore] = useState(0);
-
     return(
         <>
-            <div className="container">
-                <div className="center">
-                    <h1>Enter as many countries as you can that are in Europe</h1>
-                </div>
-
-                <div className="row justify-content-center quiz-title">
-                    <div className="col-6">
-                        <center>
-                            <form onSubmit={handleQuiz}>
-                                <label htmlFor="quiz">Enter Name &nbsp;</label>
-                                <input
-                                    id="quiz"
-                                    type = "text"
-                                    onChange= {(e) => setAnswer(e.target.value)}
-                                />
-                                <button>GO!</button>
-                            </form>
-                        </center>
-                    </div>
-                </div>
-            </div>
-
-            {/* displaying the list of found countries */}
-            {found &&
-                <>
-                    <div class="container-fluid">
-                        <div class="row d-flex">
-                            {found.map(f =>
-                                <div class="col-4">
-                                <CountryCard key={f.id} c={f}/>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </>
-            }
-            <div className='align-bottom'>
-                <h3>Score = {score}</h3>
-            </div>
-        </>
-    )    
-}
-
-function QuizEnglish( props )
-{
-    const [list, setList] = useState([]);
-    const [found, setFound] = useState([]);
-    
-
-    useEffect(() => { InitialiseList()}, [] );
-
-    async function InitialiseList()
-    {
-        const {data, error} = await supabase
-            .from('countries')
-            .select()
-            .or('lan.eq.English');
-        setList(data);
-    }
-
-    const [answer, setAnswer] = useState('');
-    const handleQuiz = async(e) =>
-    {
-        e.preventDefault();
-
-        GetAnswer(answer);
-
-        event.target.reset();
-    }
-
-    async function GetAnswer(n)
-    {
-        var flag = false;
-        var index = -1;
-
-        //checking through found array before looking it up in the listt array
-        for (var i = 0; i < found.length; ++i)
-        {
-            if (found[i].name == n)
-            {
-                console.log(found[i].name + " has already been found");
-                return;
-            }
-        }
-
-        //going through list to find a matching country name
-        //flag is flipped if found
-        for (var i = 0; i < list.length; ++i)
-        {
-            if (list[i].name == n)
-            {
-                flag = true;
-                index = i;
-
-                setScore(score + 1);
-            }
-        }
-
-        //if found, item is added to a array "found" and then removed
-        if (flag)
-        {
-            console.log("Correct");
-            setFound( previous =>[...previous, list[index]])
-
-            if (index > -1)
-            {
-                setList(list.filter(item => item.name !== n));
-            }   
-        }
-        else {   console.log("Incorrect! Try again!");   }
-    }
-
-    const [score, setScore] = useState(0);
-
-    return(
-        <>
-            <div className="container">
-                <div className="center">
-                    <h1>Enter as many countries as you can that have English as the official language</h1>
-                </div>
-
-                <div className="row justify-content-center quiz-title">
-                    <div className="col-6">
-                        <center>
-                            <form onSubmit={handleQuiz}>
-                                <label htmlFor="quiz">Enter Name &nbsp;</label>
-                                <input
-                                    id="quiz"
-                                    type = "text"
-                                    onChange= {(e) => setAnswer(e.target.value)}
-                                />
-                                <button>GO!</button>
-                            </form>
-                        </center>
-                    </div>
-                </div>
-            </div>
-
-            {/* displaying the list of found countries */}
-            {found &&
-                <>
-                    <div class="container-fluid">
-                        <div class="row d-flex">
-                            {found.map(f =>
-                                <div class="col-4">
-                                <CountryCard key={f.id} c={f}/>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </>
-            }
-            <div className='align-bottom'>
-                <h3>Score = {score}</h3>
-            </div>
-        </>
-    )    
-}
-
-function CustomQuiz(props)
-{
-    const [userInput, setUserInput] = useState(null);
-    
-    const [formError, setFormError] = useState(null);
-    
-    const [param1, setParam1] = useState('');
-    const [param2, setParam2] = useState('');
-
-    const [flag, setFlag] = useState(false);
-    
-
-    const handleSubmit = async (e) => 
-    {
-        e.preventDefault();
-
-        console.log("button clikced")
-
-        const [data, error] = await supabase
-            .from('contries')
-            .select()
-            .eq(param1 + '' + param2)
-    }
-    return(
-        <>
-            <div className='center'>
-                <p>Want to make your own Quiz?</p>
-                <p>Enter your own parameter and create it!</p>
-            </div>
-
-            <div>
-            <form onSubmit={handleSubmit}>
-
-                <label htmlFor="p1">Parameter 1: &nbsp;</label>
-                <input
-                    type="number"
-                    id="p1"
-                    value={param1}
-                    onChange= {(e) => setParam1(e.target.value)}
-                />
-
-                <label htmlFor="p2">Parameter 2: &nbsp;</label>
-                <input
-                    type="text"
-                    id="p2"
-                    value={param2}
-                    onChange= {(e) => setParam2(e.target.value)}
-                />
-
-                <button>Create Quiz</button>
-
-                </form>
-            </div>
-
+            <center><h1>Enter as many countries as you can that are in Europe</h1></center>
+            <QuizCustom param1="continent" param2="Europe" />
         </>
     )
 }
+
+function QuizEnglish()
+{
+    return(
+        <>
+            <center><h1>Enter as many countries as you can that have english as their official language</h1></center>
+            <QuizCustom param1="lan" param2="English" />
+        </>
+    )
+}
+function Custom()
+{
+    return(
+        <>
+            <center><h1>Want to make your own Quiz?</h1></center>
+            <h3>Enter your parameters</h3>
+            <QuizCustom param1="lan" param2="English" />
+        </>
+    )
+}
+
+function QuizCustom( props )
+{
+    const [list, setList] = useState([]);
+    const [found, setFound] = useState([]);
+    
+
+    useEffect(() => { InitialiseList()}, [] );
+
+    async function InitialiseList()
+    {
+        const {data, error} = await supabase
+            .from('countries')
+            .select()
+            .or(props.param1 + '.eq.' + props.param2);
+        setList(data);
+    }
+
+    const [answer, setAnswer] = useState('');
+    const handleQuiz = async(e) =>
+    {
+        e.preventDefault();
+
+        GetAnswer(answer);
+
+        event.target.reset();
+    }
+
+    async function GetAnswer(n)
+    {
+        var flag = false;
+        var index = -1;
+
+        //checking through found array before looking it up in the listt array
+        for (var i = 0; i < found.length; ++i)
+        {
+            if (found[i].name == n)
+            {
+                console.log(found[i].name + " has already been found");
+                return;
+            }
+        }
+
+        //going through list to find a matching country name
+        //flag is flipped if found
+        for (var i = 0; i < list.length; ++i)
+        {
+            if (list[i].name == n)
+            {
+                flag = true;
+                index = i;
+
+                setScore(score + 1);
+            }
+        }
+
+        //if found, item is added to a array "found" and then removed
+        if (flag)
+        {
+            console.log("Correct");
+            setFound( previous =>[...previous, list[index]])
+
+            if (index > -1)
+            {
+                setList(list.filter(item => item.name !== n));
+            }   
+        }
+        else {   console.log("Incorrect! Try again!");   }
+    }
+
+    const [score, setScore] = useState(0);
+
+    return(
+        <>
+            <div className="container">
+                <div className="row justify-content-center quiz-title">
+                    <div className="col-6">
+                        <center>
+                            <form onSubmit={handleQuiz}>
+                                <label htmlFor="quiz">Enter Name &nbsp;</label>
+                                <input
+                                    id="quiz"
+                                    type = "text"
+                                    onChange= {(e) => setAnswer(e.target.value)}
+                                />
+                                <button>GO!</button>
+                            </form>
+                        </center>
+                    </div>
+                </div>
+            </div>
+
+            {/* displaying the list of found countries */}
+            {found &&
+                <>
+                    <div class="container-fluid">
+                        <div class="row d-flex">
+                            {found.map(f =>
+                                <div class="col-4">
+                                <CountryCard key={f.id} c={f}/>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </>
+            }
+            <div className='align-bottom'>
+                <h3>Score = {score}</h3>
+            </div>
+        </>
+    )    
+}
+
+
 export default App;
