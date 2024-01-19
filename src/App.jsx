@@ -86,30 +86,20 @@ function App()
             </div>
 
             <Routes>
-                <Route exact path="" element={<Home fetchError={fetchError} countries={countries}/>}/>
                 <Route exact path="/" element={<Home fetchError={fetchError} countries={countries}/>}/>
                 <Route exact path="/Europe" element = {<QuizEurope />} />
                 <Route exact path="/English" element = {<QuizEnglish />} />
                 <Route exact path="/CustomQuiz" element = {<Custom />} />
-                
-                
+
+
             </Routes>
-            <MyComponent />
+            
         </BrowserRouter>
     )
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // Components
-export const MyComponent = () => (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-    />
-  )
-
-
 
 function Home(props)
 {
@@ -229,10 +219,14 @@ function QuizEnglish()
 }
 function Custom()
 {
+    const handleCreateCustom = () =>
+    {
+        
+    }
     return(
         <>
             <center><h1>Want to make your own Quiz?</h1></center>
-            <h3>Enter your parameters</h3>
+
             <QuizCustom param1="lan" param2="English" />
         </>
     )
@@ -316,7 +310,7 @@ function QuizCustom( props )
                     <div className="col-6">
                         <center>
                             <form onSubmit={handleQuiz}>
-                                <label htmlFor="quiz">Enter Name &nbsp;</label>
+                                <label htmlFor="quiz">Enter Name Of Country&nbsp;</label>
                                 <input
                                     id="quiz"
                                     type = "text"
